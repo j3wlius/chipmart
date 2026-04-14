@@ -1,0 +1,43 @@
+<% if @products.any? %>
+    <% @products.each do |product| %>
+        <div class="max-w-sm bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+  <!-- Product Image -->
+  <div class="h-48 w-full overflow-hidden">
+    <%# <%= image_tag product.product_image, class: "w-full h-full object-cover" %>
+  </div>
+
+  <!-- Product Details -->
+  <div class="p-4 space-y-2">
+    <!-- Name -->
+    <h2 class="text-lg font-semibold text-gray-800">
+      <%= product.product_name %>
+    </h2>
+
+    <!-- Price -->
+    <p class="text-xl font-bold text-green-600">
+      <%= number_to_currency(product.price) %>
+    </p>
+
+    <!-- Stock -->
+    <p class="text-sm">
+      <% if product.stock > 0 %>
+        <span class="text-green-500">In stock (<%= product.stock %>)</span>
+      <% else %>
+        <span class="text-red-500">Out of stock</span>
+      <% end %>
+    </p>
+
+    <!-- Actions -->
+    <div class="flex gap-2 pt-3">
+      <%= link_to "View", product_path(product),
+          class: "flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg text-sm font-medium" %>
+
+      <%= button_to "Add to Cart", cart_items_path(product_id: product.id),
+          method: :post,
+          class: "flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium",
+          disabled: product.stock == 0 %>
+    </div>
+  </div>
+</div>
+    <%end%>
+<%end%>

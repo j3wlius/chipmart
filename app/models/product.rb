@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+  has_one_attached :product_image
   belongs_to :category
   validates :product_name, presence: true, length: { minimum: 4, maximum: 50 }
   validates :stock, numericality: { only_integer: true, allow_nil: true }, presence: true
